@@ -228,10 +228,10 @@ nopaintescaped
 end
 -       jmp -
 
-!source "./Fragments/GETPARA.asm"
-!source "./Fragments/MEMCPY.asm"
-!source "./Fragments/MEMFILL.asm"
-!source "./Fragments/PLOTHIRESPIXEL.asm"
+!source "../Fragments/GETPARA.asm"
+!source "../Fragments/MEMCPY.asm"
+!source "../Fragments/MEMFILL.asm"
+!source "../Fragments/PLOTHIRESPIXEL.asm"
 
         !align 255,0
 
