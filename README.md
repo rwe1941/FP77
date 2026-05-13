@@ -45,7 +45,9 @@ Byte 2: Exponent + Sign (7-bit exponent with bias $41, sign in MSB)
 
 ### Utility Operations
 - **Compare** (`jsr compare`) - Compare two FP77 numbers (sets carry/zero flags)
-- **Convert to 16-bit Int** (`jsr convert_float_to_int16`) - Convert FP77 to signed 16-bit integer
+- **16-bit Int Conversion** 
+  - (`jsr convert_int16to_float`) - Convert signed 16-bit integer to FP77
+  - (`jsr convert_float_to_int16`) - Convert FP77 to signed 16-bit integer
 - **FAC Conversion** 
   - (`jsr convertFP77_TO_FAC`) Convert FP77 to C64 BASIC 5-byte FAC format
   - (`jsr convertFAC_TO_FP77`) Convert C64 BASIC 5-byte FAC format to FP77

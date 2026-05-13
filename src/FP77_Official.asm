@@ -1,3 +1,68 @@
+
+
+; ------------------
+; converts a 16-bit integer (X/A) in the range -32767 to 32767 to FLOAT
+; Input:
+;   16-bit integer in the range -32767 to 32767
+;   X/A: LO/HI bytes of the value
+
+; Output:
+;   A_Mantisssa: 7-bit mantissa (MSB always 1)
+;   A_Exponent: 7-bit exponent (bias 64)
+;  return $8000 if Overflow Error
+; destroy: A, X, Y
+
+; integers from 128-255 have the mantissa 128-255
+; so we shift the integer up (<128) or down (>255) to fit into that range and adapt the exponent accordingly
+
+convert_int16to_float
+    sta TEMP2
+    stx TEMP1
+    cpx #0
+    bne +
+    stx A_EXPONENT
+    stx A_MANTISSA
+    RTS
+
++   cmp #$7f
+    bcc isPositive
+    ldy #72+128
+    SEC
+    LDA #0
+    SBC TEMP1
+    STA TEMP1
+    LDA #0
+    SBC TEMP2
+    STA TEMP2
+    !byte $2c ; bit $a048
+isPositive
+    ldy #72
+
+    sty A_EXPONENT
+    lda TEMP2
+    beq lessthan256
+-
+    lsr TEMP2
+    ror TEMP1
+    inc A_EXPONENT
+    lda TEMP2
+    bne -
+    beq +
+
+lessthan256
+-
+    lda TEMP1
+    bmi +
+    asl TEMP1
+    dec A_EXPONENT
+    bne -
++
+    lda TEMP1
+    sta A_MANTISSA
+    rts
+
+
+
 ; ------------------
 ; converts a Float to a 16-bit integer (X/A) in the range -32767 to 32767
 ; Input:
